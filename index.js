@@ -58,6 +58,17 @@ app.get('/allJobs/:id', async (req,res) =>{
     res.send(result)
 })
 
+// email based data find
+app.get('/myJobs', async (req,res) =>{
+    console.log(req.query.email)
+    let query = {}
+    if(req.query?.email){
+       query = {email: req.query.email}
+    }
+    const result = await jobCollection.find(query).toArray()
+    res.send(result)
+})
+
 
 
 
