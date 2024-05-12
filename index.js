@@ -69,6 +69,41 @@ app.get('/myJobs', async (req,res) =>{
     res.send(result)
 })
 
+
+// get  Method for updated
+app.get('/allJobs/:id', async (req,res) =>{
+  const id = req.params.id
+  const query = {_id: new ObjectId(id)}
+  const result = await jobCollection.findOne(query)
+  res.send(result)
+})
+
+// update method
+app.put('/allJobs/:id', async(req,res) =>{
+  const id = req.params.id
+  console.log('id',id)
+  const filter = {_id: new ObjectId(id)}
+  const options = {upsert: true}
+  const updatedJobs = req.body
+  const Jobs = {
+    $set: {
+      picture: updatedJobs.picture,
+      subCategory: updatedJobs.subCategory,
+      name: updatedJobs.name,
+      email: updatedJobs.email,
+      category: updatedJobs.category,
+      salaryRange: updatedJobs.salaryRange,
+      JobPostingDate: updatedJobs.JobPostingDate,
+      applicationDeadline: updatedJobs.applicationDeadline,
+      jobApplicantsNumber: updatedJobs.jobApplicantsNumber,
+      jobDescription: updatedJobs.jobDescription,
+    }
+  }
+  const result = await jobCollection.updateOne(filter,Jobs,options)
+  res.send(result)
+})
+
+
 // delete Method
 app.delete('/allJobs/:id', async (req,res) =>{
   const id = req.params.id;
