@@ -69,6 +69,14 @@ app.get('/myJobs', async (req,res) =>{
     res.send(result)
 })
 
+// delete Method
+app.delete('/allJobs/:id', async (req,res) =>{
+  const id = req.params.id;
+  const query = {_id: new ObjectId(id)}
+  const result = await jobCollection.deleteOne(query)
+  res.send(result)
+})
+
 
 
 
