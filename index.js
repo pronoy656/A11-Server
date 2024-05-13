@@ -64,6 +64,7 @@ async function run() {
 
     // create collection
     const jobCollection = client.db('allJobsCollection').collection('addJob')
+    const applyCollection = client.db('allJobsCollection').collection('applyJob')
 
   // auth related api
   app.post('/jwt', async(req,res) =>{
@@ -101,6 +102,14 @@ app.post('/allJobs', logger, async(req,res) =>{
     console.log(newJob)
     const result = await jobCollection.insertOne(newJob)
     res.send(result)
+})
+
+// apply Job POst
+app.post('/applyJobs', async(req,res) =>{
+  const newApplyJob = req.body
+  console.log(newApplyJob)
+  const result = await applyCollection.insertOne(newApplyJob)
+  res.send(result)
 })
 
 // Details Page
