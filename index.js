@@ -112,6 +112,13 @@ app.post('/applyJobs', async(req,res) =>{
   res.send(result)
 })
 
+// apply all job get
+app.get('/applyJobs', async (req,res) =>{
+  const courser = applyCollection.find()
+  const result = await courser.toArray()
+  res.send(result)
+})
+
 // Details Page
 app.get('/allJobs/:id', async (req,res) =>{
     const id = req.params.id;
