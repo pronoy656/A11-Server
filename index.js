@@ -69,7 +69,7 @@ async function run() {
   // auth related api
   app.post('/jwt', async(req,res) =>{
     const user = req.body
-    console.log('user for token', user);
+    // console.log('user for token', user);
     const token = jwt.sign(user, process.env.ACCESS_SECRET_TOKEN, {expiresIn: '1h'})
 
     res.cookie('token', token,{
@@ -119,8 +119,28 @@ app.get('/applyJobs', async (req,res) =>{
   res.send(result)
 })
 
+// apply job details page
+app.get ('/applyJobs/:id', async (req,res) =>{
+  const id = req.params.id;
+  console.log(id)
+  const query = {_id: new ObjectId(id)}
+  const result = await applyCollection.findOne(query)
+  res.send(result)
+})
+
+// apply job get on specific email
+app.get('/applyJob', async(req,res) =>{
+  console.log(req.query.email)
+  let query = {}
+  if (req.query?.email){
+     query = {email: req.query.email}
+  }
+  const result = await applyCollection.find(query).toArray()
+  res.send(result)
+})
+
 // Details Page
-app.get('/allJobs/:id', async (req,res) =>{
+app.get('/allJobs/:id',  async (req,res) =>{
     const id = req.params.id;
     console.log({id})
     const query = {_id: new ObjectId(id)}
